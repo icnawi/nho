@@ -1,7 +1,6 @@
-# mango-events-parser
-Mango v4 Events Parser (WIP)
+# Mango v4 Events Parser (WIP)
 
-Transactions Events Parser of Mango v4 DEX on Solana mainnet-beta.
+Transactions Events Parser of Mango v4 DEX on Solana chains.
 
 ## Deploy with docker-compose
 
