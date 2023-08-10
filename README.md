@@ -2,8 +2,6 @@
 
 Solana Program Transactions Events Parser.
 
-## Deploy with docker-compose
-
 ## How to run locally (WIP)
 
 1. This repo's default package manager: PnPM. To install it globally use npm: `npm i -g pnpm`
