@@ -21,4 +21,4 @@ Solana Program Transactions Events Parser.
    ```
 6. Run mongodb container `docker-compose up -d`
 7. `pnpm dev`
-8. Go to `127.0.0.1:5242/fetch-events` and Voilà
+8. Go to `127.0.0.1:4444/fetch-events` and Voilà
