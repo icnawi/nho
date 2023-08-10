@@ -10,7 +10,10 @@ Solana Program Transactions Events Parser.
 2. Check whether it works: `pnpm -v`
 3. `pnpm i` to install deps
 4. Run `pnpm copy:env` to transfer env variables
-5. Modify `.env`:
+5. To fill out `ANCHOR_WALLET` variable, Solana CLI tool required. How to install [here](https://docs.solana.com/cli/install-solana-cli-tools)
+6. When installed, type: `$ solana-keygen new`
+7. Install Anchor tools. [Link](https://www.anchor-lang.com/docs/installation)
+8. Modify `.env`:
   ```shellscript
    NODE_ENV=development
    API_HOST=127.0.0.1
