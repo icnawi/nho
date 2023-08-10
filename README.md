@@ -1,6 +1,6 @@
-# Solana Tx Events Parser (WIP)
+# Solana Transaction Events Parser (WIP)
 
-Solana Transactions Events Parser.
+Solana Program Transactions Events Parser.
 
 ## Deploy with docker-compose
 
@@ -10,7 +10,7 @@ Solana Transactions Events Parser.
 3. `pnpm i` to install deps
 4. Run `pnpm copy:env` to prepare env
 5. Modify `.env` as needed
-6. `pnpm start:dev`
+6. `pnpm dev`
 
 ## Arch
 

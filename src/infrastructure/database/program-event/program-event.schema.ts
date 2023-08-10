@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
+import { Schema } from 'mongoose';
 
-export const mangoEventSchema = new Schema(
+export const programEventSchema = new Schema(
   {
     blockTime: { type: Number, required: true },
     events: { type: [], required: true },
@@ -16,5 +16,5 @@ export const mangoEventSchema = new Schema(
         delete ret._id;
       },
     },
-  }
+  },
 );

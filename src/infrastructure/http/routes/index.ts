@@ -1,7 +1,7 @@
-import { type RouteOptions } from "fastify";
-import { MangoEventRepository } from "@core/repositories/mango-event.repo";
-import { mangoEventsRoutes } from "./mango-event.routes.js";
+import { type RouteOptions } from 'fastify';
+import { ProgramEventRepository } from '@core/repositories/program-event.repo';
+import { programEventsRoutes } from './program-event.routes';
 
-export default (mangoEventRepository: MangoEventRepository): RouteOptions[] => [
-  ...mangoEventsRoutes(mangoEventRepository),
+export default (programEventRepository: ProgramEventRepository): RouteOptions[] => [
+  ...programEventsRoutes(programEventRepository),
 ];

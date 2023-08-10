@@ -1,6 +1,6 @@
-import BN from "bn.js";
-import { IdlEvent } from "@project-serum/anchor/dist/cjs/idl";
-import { Event } from "@project-serum/anchor";
+import BN from 'bn.js';
+import { IdlEvent } from '@project-serum/anchor/dist/cjs/idl';
+import { Event } from '@project-serum/anchor';
 
 export interface ParsedEventData {
   mangoGroup: string;
@@ -21,7 +21,7 @@ export interface ParsedEvent {
   name: string;
 }
 
-export interface MangoEvent {
+export interface ProgramEvent {
   id: string;
   blockTime: string;
   events: Event<IdlEvent, ParsedEvent>[];

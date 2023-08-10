@@ -1,22 +1,24 @@
 {
-  "name": "mango-events-parser",
+  "name": "rhombus",
   "version": "0.1.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/src/main.js",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:watch": "pnpm build --watch",
-    "start": "node dist/main.js",
-    "dev": "tsc-watch --onSuccess 'nodemon dist/main.js'",
+    "watch": "nodemon --watch './**/*.ts' --exec 'ts-node src/main.ts'",
+    "dev": "tsc-watch --onSuccess \"npm run watch\"",
     "lint:check": "eslint --cache \"src/**/*.ts\"",
     "lint:fix": "pnpm lint:check --fix",
     "test": "jest --passWithNoTests --runInBand --no-cache",
     "test:staged": "pnpm test -- --findRelatedTests",
-    "test:ci": "pnpm test -- --coverage"
+    "test:ci": "pnpm test -- --coverage",
+    "prettier:check": "prettier src --check",
+    "prettier:fix": "prettier -- --write",
+    "prettier": "prettier './src/**/*.{js,ts}'"
   },
   "keywords": [
-    "mango-v4",
-    "mango events parser"
+    "solana transaction events parser"
   ],
   "author": "Eugene Karakulin",
   "license": "ISC",
@@ -32,11 +34,11 @@
     "ajv": "^8.12.0",
     "bn.js": "^5.2.1",
     "dotenv": "^16.0.3",
+    "esno": "^0.17.0",
     "fastify": "^4.15.0",
     "fastify-cors": "^6.1.0",
     "fastify-helmet": "^7.1.0",
     "fastify-plugin": "^4.5.0",
-    "module-alias": "^2.2.2",
     "mongodb": "^5.3.0",
     "mongoose": "^7.0.4",
     "ramda": "^0.29.0",
@@ -55,9 +57,11 @@
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "concurrently": "^8.0.1",
     "eslint": "^8.38.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-config-standard-with-typescript": "^34.0.1",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.5.0",
     "nodemon": "^2.0.22",
@@ -67,12 +71,8 @@
     "rollup": "^3.21.0",
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
-    "tsc-watch": "^6.0.0"
-  },
-  "_moduleAliases": {
-    "@core": "dist/core",
-    "@infrastructure": "dist/infrastructure",
-    "@assets": "dist/assets"
+    "tsc-watch": "^6.0.0",
+    "tsconfig-paths": "^4.2.0"
   },
   "lint-staged": {
     "*.ts": [

@@ -1,18 +1,17 @@
-require('module-alias/register');
-import { createServer } from "@infrastructure/http/server";
-import { init } from "@infrastructure/database";
+import { createServer } from '@infrastructure/http/server';
+import { init } from '@infrastructure/database';
 
 const main = async (): Promise<void> => {
   const server = await createServer();
   const { API_PORT: port, API_HOST: host, MONGO_URL: mongoUrl } = server.config;
   await init(mongoUrl);
   await server.listen({ host, port });
-  process.on("unhandledRejection", (err) => {
+  process.on('unhandledRejection', err => {
     console.error(err);
     process.exit(1);
   });
 
-  for (const signal of ["SIGINT", "SIGTERM"]) {
+  for (const signal of ['SIGINT', 'SIGTERM']) {
     process.on(signal, () => {
       console.log(`closing application on ${signal}`);
       server
