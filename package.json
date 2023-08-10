@@ -6,6 +6,7 @@
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "build:watch": "pnpm build --watch",
+    "copy:env": "cp .env.example .env",
     "watch": "nodemon --watch './**/*.ts' --exec 'ts-node src/main.ts'",
     "dev": "tsc-watch --onSuccess \"npm run watch\"",
     "lint:check": "eslint --cache \"src/**/*.ts\"",
@@ -34,7 +35,6 @@
     "ajv": "^8.12.0",
     "bn.js": "^5.2.1",
     "dotenv": "^16.0.3",
-    "esno": "^0.17.0",
     "fastify": "^4.15.0",
     "fastify-cors": "^6.1.0",
     "fastify-helmet": "^7.1.0",
