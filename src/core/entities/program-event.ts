@@ -23,7 +23,7 @@ export interface ParsedEvent {
 
 export interface ProgramEvent {
   id: string;
-  blockTime: string;
+  blockTime: number | null;
   events: Event<IdlEvent, ParsedEvent>[];
   signature: string;
 }

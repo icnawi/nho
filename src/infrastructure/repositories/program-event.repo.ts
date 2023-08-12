@@ -3,8 +3,13 @@ import { type ProgramEventPayload } from '@core/entities/program-event.payload';
 import { type ProgramEventRepository } from '@core/repositories/program-event.repo';
 import { programEventDao } from '@infrastructure/database/program-event/program-event.dao';
 import IdlJson from '../../assets/mango_v4.json';
-import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js';
-import { Program, EventParser } from '@project-serum/anchor';
+import {
+  clusterApiUrl,
+  Connection,
+  PublicKey,
+  VersionedTransactionResponse,
+} from '@solana/web3.js';
+import { EventParser, Program } from '@project-serum/anchor';
 import * as R from 'ramda';
 
 export class ProgramEventRepo implements ProgramEventRepository {
@@ -36,38 +41,45 @@ export class ProgramEventRepo implements ProgramEventRepository {
       limit: 40,
     });
 
-    const transactionOrNulls = await connection.getTransactions(
-      R.map(x => x.signature, signatures),
-      { maxSupportedTransactionVersion: 0 },
-    );
+    const transactionOrNulls: (VersionedTransactionResponse | null)[] =
+      await connection.getTransactions(
+        R.map(tx => tx.signature, signatures),
+        { maxSupportedTransactionVersion: 0 },
+      );
 
-    const problemTransactions = R.compose(
+    const problemTransactions = R.compose<
+      [(VersionedTransactionResponse | null)[]],
+      (string | null)[],
+      string[]
+    >(
       R.filter(R.complement(R.isNil)),
-      // @ts-ignore
-      R.map((tx, index) => (tx ? null : signatures[index].signature)),
+      R.addIndex(R.map)((tx, idx) => (tx ? null : signatures[idx].signature)),
     )(transactionOrNulls);
 
     if (problemTransactions.length) {
       throw Error(
-        'Details for the following transactions were not found: ' + problemTransactions.join(', '),
+        `Details for the following transactions were not found ${problemTransactions.join(', ')}`,
       );
     }
 
-    const transactions = R.filter(R.complement(R.isNil))(transactionOrNulls);
+    const transactions: VersionedTransactionResponse[] = R.filter(R.complement(R.isNil))(
+      transactionOrNulls,
+    );
 
-    const events = transactions
-      .map(tx => {
+    return R.compose<
+      [VersionedTransactionResponse[]],
+      ProgramEventPayload[],
+      ProgramEventPayload[]
+    >(
+      R.filter(R.complement(R.isNil)),
+      R.map((tx: VersionedTransactionResponse): ProgramEventPayload => {
         const logs = tx.meta?.logMessages;
-        return logs
-          ? {
-              signature: tx.transaction.signatures[0],
-              blockTime: tx.blockTime,
-              events: [...eventParser.parseLogs(logs)],
-            }
-          : null;
-      })
-      .filter(tx => !!tx);
-    // @ts-ignore
-    return events;
+        return {
+          blockTime: tx.blockTime!,
+          signature: tx.transaction.signatures[0],
+          events: [...eventParser.parseLogs(logs!)],
+        };
+      }),
+    )(transactions);
   }
 }

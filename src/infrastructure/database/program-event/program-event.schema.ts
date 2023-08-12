@@ -11,8 +11,8 @@ export const programEventSchema = new Schema(
     versionKey: false,
     id: true,
     toJSON: {
-      transform(doc, ret) {
-        ret.id = ret._id;
+      transform(doc, ret: { id: number; _id?: number }) {
+        ret.id = ret._id!;
         delete ret._id;
       },
     },
